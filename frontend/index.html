@@ -14,6 +14,7 @@
     >
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
 </head>
 
 <body>
@@ -242,6 +243,411 @@
                     <button class="primary-button" id="emptyAddButton">
                         + Add your first activity
                     </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DAILY WORKOUT -->
+        <section class="card extra-card workout-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="eyebrow">MOVEMENT</span>
+                    <h3>Daily Workout</h3>
+                </div>
+
+                <div class="card-icon">
+                    🏋️
+                </div>
+
+            </div>
+
+            <div class="time-row">
+
+                <div class="time-input-group">
+                    <label for="workoutStart">Start time</label>
+                    <input type="time" id="workoutStart">
+                </div>
+
+                <div class="time-arrow">→</div>
+
+                <div class="time-input-group">
+                    <label for="workoutEnd">End time</label>
+                    <input type="time" id="workoutEnd">
+                </div>
+
+            </div>
+
+            <div class="timed-result">
+                <div>
+                    <span class="result-label">TOTAL TIME</span>
+                    <strong id="workoutDuration">—</strong>
+                </div>
+            </div>
+
+            <button class="primary-button full-width" id="saveWorkout">
+                Save workout
+            </button>
+
+        </section>
+
+
+        <!-- MEDITATION -->
+        <section class="card extra-card meditation-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="eyebrow">MIND</span>
+                    <h3>Meditation</h3>
+                </div>
+
+                <div class="card-icon">
+                    🧘
+                </div>
+
+            </div>
+
+            <div class="time-row">
+
+                <div class="time-input-group">
+                    <label for="meditationStart">Start time</label>
+                    <input type="time" id="meditationStart">
+                </div>
+
+                <div class="time-arrow">→</div>
+
+                <div class="time-input-group">
+                    <label for="meditationEnd">End time</label>
+                    <input type="time" id="meditationEnd">
+                </div>
+
+            </div>
+
+            <div class="timed-result">
+                <div>
+                    <span class="result-label">TOTAL TIME</span>
+                    <strong id="meditationDuration">—</strong>
+                </div>
+            </div>
+
+            <button class="primary-button full-width" id="saveMeditation">
+                Save meditation
+            </button>
+
+        </section>
+
+
+        <!-- BOOK READING -->
+        <section class="card extra-card reading-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="eyebrow">LEARNING</span>
+                    <h3>Book Reading</h3>
+                </div>
+
+                <div class="card-icon">
+                    📖
+                </div>
+
+            </div>
+
+            <div class="field-row">
+
+                <div class="time-input-group">
+                    <label for="readingBook">Book</label>
+                    <input
+                        type="text"
+                        id="readingBook"
+                        class="text-field"
+                        placeholder="What are you reading?"
+                    >
+                </div>
+
+                <div class="time-input-group field-narrow">
+                    <label for="readingPages">Pages</label>
+                    <input
+                        type="number"
+                        id="readingPages"
+                        class="text-field"
+                        min="0"
+                        placeholder="0"
+                    >
+                </div>
+
+            </div>
+
+            <div class="time-row">
+
+                <div class="time-input-group">
+                    <label for="readingStart">Start time</label>
+                    <input type="time" id="readingStart">
+                </div>
+
+                <div class="time-arrow">→</div>
+
+                <div class="time-input-group">
+                    <label for="readingEnd">End time</label>
+                    <input type="time" id="readingEnd">
+                </div>
+
+            </div>
+
+            <div class="timed-result">
+                <div>
+                    <span class="result-label">TOTAL TIME</span>
+                    <strong id="readingDuration">—</strong>
+                </div>
+            </div>
+
+            <button class="primary-button full-width" id="saveReading">
+                Save reading
+            </button>
+
+        </section>
+
+
+        <!-- WATER INTAKE -->
+        <section class="card extra-card water-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="eyebrow">HYDRATION</span>
+                    <h3>Water Intake</h3>
+                </div>
+
+                <div class="card-icon">
+                    💧
+                </div>
+
+            </div>
+
+            <div class="water-summary">
+
+                <strong id="waterGlasses">0</strong>
+
+                <span>/ <span id="waterTarget">8</span> glasses</span>
+
+                <small id="waterMl">0 ml</small>
+
+                <span class="water-status" id="waterStatus">Not logged</span>
+
+            </div>
+
+            <div class="water-drops" id="waterDrops">
+                <!-- Generated by JavaScript -->
+            </div>
+
+            <div class="water-bar">
+                <i id="waterBar"></i>
+            </div>
+
+            <div class="water-controls">
+
+                <button class="secondary-button" id="waterMinus">
+                    − Glass
+                </button>
+
+                <button class="secondary-button" id="waterPlus">
+                    + Glass
+                </button>
+
+            </div>
+
+            <button class="primary-button full-width" id="saveWater">
+                Save water
+            </button>
+
+        </section>
+
+
+        <!-- DAILY FOOD INTAKE -->
+        <section class="card extra-card food-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="eyebrow">NUTRITION</span>
+                    <h3>Daily Food Intake</h3>
+                </div>
+
+                <div class="card-icon">
+                    🍽️
+                </div>
+
+            </div>
+
+            <div class="meal-grid">
+
+                <!-- BREAKFAST -->
+                <div class="meal-card" data-meal="breakfast">
+
+                    <div class="meal-header">
+                        <span class="meal-icon">🍳</span>
+                        <div>
+                            <span class="eyebrow">MORNING</span>
+                            <h4>Breakfast</h4>
+                        </div>
+                    </div>
+
+                    <div class="time-input-group">
+                        <label for="mealTime-breakfast">Time</label>
+                        <input type="time" id="mealTime-breakfast" class="meal-time">
+                    </div>
+
+                    <div class="time-input-group meal-food-group">
+                        <label for="mealFood-breakfast">What did you eat?</label>
+                        <textarea
+                            id="mealFood-breakfast"
+                            class="meal-food"
+                            placeholder="e.g. oats, banana, black coffee"
+                        ></textarea>
+                    </div>
+
+                    <div class="meal-footer">
+                        <span class="meal-status">Not logged</span>
+                        <button class="primary-button meal-save">Save</button>
+                    </div>
+
+                </div>
+
+
+                <!-- LUNCH -->
+                <div class="meal-card" data-meal="lunch">
+
+                    <div class="meal-header">
+                        <span class="meal-icon">🍛</span>
+                        <div>
+                            <span class="eyebrow">MIDDAY</span>
+                            <h4>Lunch</h4>
+                        </div>
+                    </div>
+
+                    <div class="time-input-group">
+                        <label for="mealTime-lunch">Time</label>
+                        <input type="time" id="mealTime-lunch" class="meal-time">
+                    </div>
+
+                    <div class="time-input-group meal-food-group">
+                        <label for="mealFood-lunch">What did you eat?</label>
+                        <textarea
+                            id="mealFood-lunch"
+                            class="meal-food"
+                            placeholder="e.g. rice, dal, vegetables"
+                        ></textarea>
+                    </div>
+
+                    <div class="meal-footer">
+                        <span class="meal-status">Not logged</span>
+                        <button class="primary-button meal-save">Save</button>
+                    </div>
+
+                </div>
+
+
+                <!-- SNACK -->
+                <div class="meal-card" data-meal="snack">
+
+                    <div class="meal-header">
+                        <span class="meal-icon">🍪</span>
+                        <div>
+                            <span class="eyebrow">IN BETWEEN</span>
+                            <h4>Snack</h4>
+                        </div>
+                    </div>
+
+                    <div class="time-input-group">
+                        <label for="mealTime-snack">Time</label>
+                        <input type="time" id="mealTime-snack" class="meal-time">
+                    </div>
+
+                    <div class="time-input-group meal-food-group">
+                        <label for="mealFood-snack">What did you eat?</label>
+                        <textarea
+                            id="mealFood-snack"
+                            class="meal-food"
+                            placeholder="e.g. fruit, nuts, tea"
+                        ></textarea>
+                    </div>
+
+                    <div class="meal-footer">
+                        <span class="meal-status">Not logged</span>
+                        <button class="primary-button meal-save">Save</button>
+                    </div>
+
+                </div>
+
+
+                <!-- DINNER -->
+                <div class="meal-card" data-meal="dinner">
+
+                    <div class="meal-header">
+                        <span class="meal-icon">🍽️</span>
+                        <div>
+                            <span class="eyebrow">EVENING</span>
+                            <h4>Dinner</h4>
+                        </div>
+                    </div>
+
+                    <div class="time-input-group">
+                        <label for="mealTime-dinner">Time</label>
+                        <input type="time" id="mealTime-dinner" class="meal-time">
+                    </div>
+
+                    <div class="time-input-group meal-food-group">
+                        <label for="mealFood-dinner">What did you eat?</label>
+                        <textarea
+                            id="mealFood-dinner"
+                            class="meal-food"
+                            placeholder="e.g. roti, sabzi, curd"
+                        ></textarea>
+                    </div>
+
+                    <div class="meal-footer">
+                        <span class="meal-status">Not logged</span>
+                        <button class="primary-button meal-save">Save</button>
+                    </div>
+
+                </div>
+
+
+                <!-- OTHERS -->
+                <div class="meal-card" data-meal="others">
+
+                    <div class="meal-header">
+                        <span class="meal-icon">🥤</span>
+                        <div>
+                            <span class="eyebrow">ANYTIME</span>
+                            <h4>Others</h4>
+                        </div>
+                    </div>
+
+                    <div class="time-input-group">
+                        <label for="mealTime-others">Time</label>
+                        <input type="time" id="mealTime-others" class="meal-time">
+                    </div>
+
+                    <div class="time-input-group meal-food-group">
+                        <label for="mealFood-others">What did you eat or drink?</label>
+                        <textarea
+                            id="mealFood-others"
+                            class="meal-food"
+                            placeholder="Anything that doesn't fit above"
+                        ></textarea>
+                    </div>
+
+                    <div class="meal-footer">
+                        <span class="meal-status">Not logged</span>
+                        <button class="primary-button meal-save">Save</button>
+                    </div>
 
                 </div>
 
@@ -501,6 +907,7 @@
 
 
 <script src="script.js"></script>
+<script src="script2.js"></script>
 
 </body>
 </html>
