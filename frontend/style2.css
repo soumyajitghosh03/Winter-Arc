@@ -1,0 +1,494 @@
+/* =========================================================
+   WINTER ARC 2026 · style2.css
+   Extra trackers: workout, meditation, reading, water, food.
+   Load AFTER style.css (it reuses its colors and base styles).
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   SHARED
+   --------------------------------------------------------- */
+
+.extra-card {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.extra-card.is-loading {
+    opacity: 0.5;
+
+    pointer-events: none;
+}
+
+
+.extra-card {
+    transition: opacity 0.2s ease;
+}
+
+
+/* the save button always sits at the bottom of its card */
+.extra-card > .primary-button.full-width {
+    margin-top: auto;
+}
+
+
+.text-field,
+.meal-food {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+/* ---------------------------------------------------------
+   CARD COLOURS
+   --------------------------------------------------------- */
+
+.workout-card {
+    --accent: #f0703c;
+    --accent-2: #ffa066;
+    --accent-soft: #ffeadb;
+
+    background: linear-gradient(150deg, rgba(255, 234, 219, 0.85), rgba(255, 255, 255, 0.72) 60%);
+}
+
+
+.meditation-card {
+    --accent: #2fa57a;
+    --accent-2: #5fd0a2;
+    --accent-soft: #dcf5ea;
+
+    background: linear-gradient(150deg, rgba(220, 245, 234, 0.85), rgba(255, 255, 255, 0.72) 60%);
+}
+
+
+.reading-card {
+    --accent: #d6951a;
+    --accent-2: #f2c25c;
+    --accent-soft: #fff1d2;
+
+    background: linear-gradient(150deg, rgba(255, 241, 210, 0.85), rgba(255, 255, 255, 0.72) 60%);
+}
+
+
+.water-card {
+    --accent: #2a9df4;
+    --accent-2: #6ec3ff;
+    --accent-soft: #def0ff;
+
+    background: linear-gradient(150deg, rgba(222, 240, 255, 0.85), rgba(255, 255, 255, 0.72) 60%);
+}
+
+
+.food-card {
+    --accent: var(--berry);
+    --accent-2: #ff8fa6;
+    --accent-soft: #ffe8ee;
+
+    grid-column: 1 / -1;
+
+    background: linear-gradient(150deg, rgba(255, 244, 240, 0.85), rgba(255, 255, 255, 0.72) 60%);
+}
+
+
+/* ---------------------------------------------------------
+   TIMED CARDS (workout, meditation, reading)
+   --------------------------------------------------------- */
+
+.time-row {
+    display: flex;
+    align-items: end;
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.time-arrow {
+    color: var(--accent);
+    opacity: 0.6;
+
+    padding-bottom: 12px;
+}
+
+
+.field-row {
+    display: flex;
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+
+.field-narrow {
+    flex: 0 0 92px;
+}
+
+
+.timed-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 18px;
+
+    margin-bottom: 16px;
+
+    border-radius: 18px;
+
+    background: color-mix(in srgb, var(--accent) 11%, transparent);
+
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+
+.timed-result strong {
+    font-family: "Playfair Display", serif;
+    font-size: 26px;
+    letter-spacing: -0.4px;
+}
+
+
+/* ---------------------------------------------------------
+   WATER
+   --------------------------------------------------------- */
+
+.water-summary {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    margin-bottom: 14px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+.water-summary strong {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    line-height: 1;
+
+    color: var(--accent);
+}
+
+
+.water-summary small {
+    font-size: 11px;
+}
+
+
+.water-status {
+    margin-left: auto;
+
+    font-size: 11px;
+}
+
+
+.water-drops {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    margin-bottom: 14px;
+}
+
+
+.water-drop {
+    width: 38px;
+    height: 44px;
+
+    display: grid;
+    place-items: center;
+
+    border: 0;
+    cursor: pointer;
+
+    border-radius: 12px;
+
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+
+    font-size: 20px;
+
+    filter: grayscale(1);
+    opacity: 0.45;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.2s ease,
+        filter 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.water-drop:hover {
+    transform: translateY(-2px);
+
+    opacity: 0.8;
+}
+
+
+.water-drop.filled {
+    filter: none;
+    opacity: 1;
+
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+
+.water-bar {
+    height: 6px;
+
+    margin-bottom: 14px;
+
+    border-radius: 999px;
+
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+
+    overflow: hidden;
+}
+
+
+.water-bar i {
+    display: block;
+
+    width: 0;
+    height: 100%;
+
+    border-radius: 999px;
+
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+
+    transition: width 0.3s ease;
+}
+
+
+.water-controls {
+    display: flex;
+    gap: 8px;
+
+    margin-bottom: 16px;
+}
+
+
+.water-controls .secondary-button {
+    flex: 1;
+}
+
+
+/* ---------------------------------------------------------
+   FOOD INTAKE
+   --------------------------------------------------------- */
+
+.meal-grid {
+    display: grid;
+
+    grid-template-columns: repeat(6, 1fr);
+
+    gap: 14px;
+}
+
+
+.meal-card {
+    grid-column: span 2;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    padding: 18px;
+
+    border-radius: 22px;
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    background:
+        linear-gradient(
+            160deg,
+            color-mix(in srgb, var(--accent) 11%, white),
+            rgba(255, 255, 255, 0.82) 65%
+        );
+
+    box-shadow: 0 10px 26px -16px rgba(40, 70, 130, 0.35);
+}
+
+
+.meal-card:nth-child(n + 4) {
+    grid-column: span 3;
+}
+
+
+.meal-card[data-meal="breakfast"] {
+    --accent: #d6951a;
+    --accent-2: #f2c25c;
+    --accent-soft: #fff1d2;
+}
+
+.meal-card[data-meal="lunch"] {
+    --accent: #2fa57a;
+    --accent-2: #5fd0a2;
+    --accent-soft: #dcf5ea;
+}
+
+.meal-card[data-meal="snack"] {
+    --accent: #e5607f;
+    --accent-2: #ff8fa6;
+    --accent-soft: #ffe8ee;
+}
+
+.meal-card[data-meal="dinner"] {
+    --accent: #7a63e0;
+    --accent-2: #a28bf5;
+    --accent-soft: #eee9ff;
+}
+
+.meal-card[data-meal="others"] {
+    --accent: #4a7bf0;
+    --accent-2: #6fa8ff;
+    --accent-soft: #e5eeff;
+}
+
+
+.meal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.meal-icon {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 14px;
+
+    background: var(--accent-soft);
+
+    font-size: 20px;
+}
+
+
+.meal-header .eyebrow {
+    margin-bottom: 2px;
+}
+
+
+.meal-header h4 {
+    font-family: "Playfair Display", serif;
+    font-size: 19px;
+    letter-spacing: -0.2px;
+}
+
+
+.meal-card .time-input-group {
+    flex: none;
+}
+
+
+.meal-card .meal-food-group {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.meal-food {
+    flex: 1;
+
+    min-height: 84px;
+
+    resize: vertical;
+
+    line-height: 1.55;
+}
+
+
+.meal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.meal-status {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+.meal-status.logged {
+    color: var(--accent);
+
+    font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+
+    .meal-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .meal-card,
+    .meal-card:nth-child(n + 4) {
+        grid-column: span 1;
+    }
+
+
+    /* five cards in two columns: let the last one stretch */
+    .meal-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .food-card {
+        grid-column: auto;
+    }
+
+}
+
+
+@media (max-width: 560px) {
+
+    .meal-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .meal-card,
+    .meal-card:nth-child(n + 4),
+    .meal-card:last-child {
+        grid-column: auto;
+    }
+
+
+    .water-drop {
+        width: 34px;
+        height: 40px;
+    }
+
+}
