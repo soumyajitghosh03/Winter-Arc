@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Winter Arc 2026</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="page-background"></div>
+
+<div class="app-shell">
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-icon">❄</div>
+
+            <div>
+                <h1>Winter Arc</h1>
+                <p>2026 · 90 Day Challenge</p>
+            </div>
+        </div>
+
+        <div class="topbar-right">
+
+            <div class="live-clock">
+                <span id="currentTime">00:00:00</span>
+                <small id="currentDate">Loading...</small>
+            </div>
+
+            <button class="icon-button" id="calendarButton" title="Calendar">
+                📅
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- DATE NAVIGATION -->
+    <section class="date-section">
+
+        <button class="date-nav-button" id="previousDay">
+            ←
+        </button>
+
+        <div class="selected-date">
+
+            <div class="date-label" id="selectedDayName">
+                Saturday
+            </div>
+
+            <h2 id="selectedDate">
+                October 3, 2026
+            </h2>
+
+            <div class="arc-day">
+                <span id="arcDay">Day 3</span>
+                <span class="separator">•</span>
+                <span>Winter Arc 2026</span>
+            </div>
+
+        </div>
+
+        <button class="date-nav-button" id="nextDay">
+            →
+        </button>
+
+    </section>
+
+
+    <!-- MAIN GRID -->
+    <main class="dashboard-grid">
+
+        <!-- SLEEP CARD -->
+        <section class="card sleep-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="eyebrow">RECOVERY</span>
+                    <h3>Sleep</h3>
+                </div>
+
+                <div class="card-icon sleep-icon">
+                    🌙
+                </div>
+
+            </div>
+
+            <div class="sleep-inputs">
+
+                <div class="time-input-group">
+                    <label for="sleepStart">Sleep start</label>
+                    <input type="time" id="sleepStart">
+                </div>
+
+                <div class="sleep-arrow">→</div>
+
+                <div class="time-input-group">
+                    <label for="sleepEnd">Wake up</label>
+                    <input type="time" id="sleepEnd">
+                </div>
+
+            </div>
+
+            <div class="sleep-result">
+
+                <div>
+                    <span class="result-label">TOTAL SLEEP</span>
+                    <strong id="sleepDuration">—</strong>
+                </div>
+
+                <div class="sleep-target">
+                    <span>Target</span>
+                    <strong>7h</strong>
+                </div>
+
+            </div>
+
+            <button class="primary-button full-width" id="saveSleep">
+                Save sleep
+            </button>
+
+        </section>
+
+
+        <!-- TODAY PROGRESS -->
+        <section class="card progress-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="eyebrow">TODAY</span>
+                    <h3>Progress</h3>
+                </div>
+
+                <div class="progress-percentage" id="progressPercentage">
+                    0%
+                </div>
+
+            </div>
+
+            <div class="progress-ring-container">
+
+                <div class="progress-ring">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            class="progress-track"
+                            cx="60"
+                            cy="60"
+                            r="50"
+                        />
+
+                        <circle
+                            class="progress-value"
+                            id="progressCircle"
+                            cx="60"
+                            cy="60"
+                            r="50"
+                        />
+
+                    </svg>
+
+                    <div class="progress-center">
+                        <strong id="completedCount">0</strong>
+                        <span>completed</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="progress-summary">
+
+                <div>
+                    <span>Planned</span>
+                    <strong id="plannedCount">0</strong>
+                </div>
+
+                <div>
+                    <span>Completed</span>
+                    <strong id="completedCountSmall">0</strong>
+                </div>
+
+                <div>
+                    <span>Remaining</span>
+                    <strong id="remainingCount">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DAILY PLAN -->
+        <section class="card daily-plan-card">
+
+            <div class="card-header daily-plan-header">
+
+                <div>
+                    <span class="eyebrow">YOUR DAY</span>
+                    <h3>Daily Plan</h3>
+                </div>
+
+                <button class="secondary-button" id="addActivityButton">
+                    + Add Activity
+                </button>
+
+            </div>
+
+            <div class="timeline" id="activityList">
+
+                <div class="empty-state" id="emptyState">
+
+                    <div class="empty-icon">
+                        ❄
+                    </div>
+
+                    <h4>Your day is still open</h4>
+
+                    <p>
+                        Add activities from your library to start building
+                        your routine.
+                    </p>
+
+                    <button class="primary-button" id="emptyAddButton">
+                        + Add your first activity
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DAILY NOTE -->
+        <section class="card note-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="eyebrow">REFLECTION</span>
+                    <h3>Daily Note</h3>
+                </div>
+
+                <div class="card-icon">
+                    ✍️
+                </div>
+
+            </div>
+
+            <textarea
+                id="dailyNote"
+                placeholder="How was your day? What went well? What could have been better?"
+            ></textarea>
+
+            <div class="note-footer">
+
+                <span id="noteStatus">
+                    Unsaved
+                </span>
+
+                <button class="primary-button" id="saveNote">
+                    Save note
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ACTIVITY MODAL -->
+<div class="modal-overlay" id="activityModal">
+
+    <div class="modal activity-modal">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="eyebrow">ACTIVITY LIBRARY</span>
+                <h3>Add to your day</h3>
+            </div>
+
+            <button class="close-button" id="closeActivityModal">
+                ×
+            </button>
+
+        </div>
+
+        <div class="activity-grid" id="activityLibrary">
+
+            <!-- Generated by JavaScript -->
+
+        </div>
+
+        <div class="custom-activity-section">
+
+            <div class="divider">
+                <span>or create your own</span>
+            </div>
+
+            <div class="custom-activity-form">
+
+                <input
+                    type="text"
+                    id="customActivityName"
+                    placeholder="Activity name..."
+                >
+
+                <select id="customActivityCategory">
+
+                    <option value="general">General</option>
+                    <option value="study">Study</option>
+                    <option value="work">Work</option>
+                    <option value="health">Health</option>
+                    <option value="routine">Routine</option>
+                    <option value="break">Break</option>
+
+                </select>
+
+                <input
+                    type="text"
+                    id="customActivityIcon"
+                    placeholder="Icon"
+                    maxlength="2"
+                >
+
+                <button class="primary-button" id="createActivity">
+                    Create
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TIME MODAL -->
+<div class="modal-overlay" id="timeModal">
+
+    <div class="modal small-modal">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="eyebrow">SCHEDULE ACTIVITY</span>
+                <h3 id="timeModalTitle">Activity</h3>
+            </div>
+
+            <button class="close-button" id="closeTimeModal">
+                ×
+            </button>
+
+        </div>
+
+        <div class="selected-activity-preview">
+
+            <span id="selectedActivityIcon">📋</span>
+
+            <div>
+                <strong id="selectedActivityName">Activity</strong>
+                <small id="selectedActivityCategory">General</small>
+            </div>
+
+        </div>
+
+        <div class="time-form">
+
+            <div class="time-input-group">
+
+                <label for="activityStart">
+                    Start time
+                </label>
+
+                <input type="time" id="activityStart">
+
+            </div>
+
+            <div class="time-input-group">
+
+                <label for="activityEnd">
+                    End time
+                </label>
+
+                <input type="time" id="activityEnd">
+
+            </div>
+
+        </div>
+
+        <button class="primary-button full-width" id="confirmActivity">
+            Add to today's plan
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- CALENDAR PAGE (full screen) -->
+<div class="calendar-page" id="calendarModal">
+
+    <div class="calendar-page-inner">
+
+        <header class="calendar-page-header">
+
+            <button class="calendar-back" id="closeCalendarModal">
+                ← Back to day
+            </button>
+
+            <div class="calendar-page-title">
+                <span class="eyebrow">NAVIGATION</span>
+                <h2>Calendar</h2>
+            </div>
+
+            <button class="secondary-button calendar-today" id="calendarToday">
+                Today
+            </button>
+
+        </header>
+
+
+        <div class="calendar-toolbar">
+
+            <div class="calendar-controls">
+
+                <button class="calendar-nav" id="calendarPrevious" title="Previous month">
+                    ←
+                </button>
+
+                <strong id="calendarMonth">
+                    October 2026
+                </strong>
+
+                <button class="calendar-nav" id="calendarNext" title="Next month">
+                    →
+                </button>
+
+            </div>
+
+            <div class="calendar-jump">
+
+                <select id="calendarMonthSelect" aria-label="Month"></select>
+
+                <select id="calendarYearSelect" aria-label="Year"></select>
+
+                <input type="date" id="calendarJumpDate" aria-label="Jump to date">
+
+                <button class="primary-button" id="calendarJumpGo">
+                    Go to date
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="calendar-weekdays">
+
+            <span>MON</span>
+            <span>TUE</span>
+            <span>WED</span>
+            <span>THU</span>
+            <span>FRI</span>
+            <span>SAT</span>
+            <span>SUN</span>
+
+        </div>
+
+        <div class="calendar-days" id="calendarDays">
+            <!-- Generated by JS -->
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,2114 @@
+/* =========================================================
+   WINTER ARC 2026 · restyle
+   Design only. Every selector the HTML/JS relies on is kept.
+   Palette: frost, glacier blue, aurora teal, dusk violet, berry rose
+   ========================================================= */
+
+:root {
+    --ink: #14233b;
+    --text: #14233b;
+    --muted: #6b7b93;
+    --border: rgba(120, 150, 190, 0.22);
+
+    --frost: #eef5fc;
+    --glass: rgba(255, 255, 255, 0.72);
+    --glass-strong: rgba(255, 255, 255, 0.9);
+
+    --glacier: #4a7bf0;
+    --aurora: #1fb5b0;
+    --dusk: #7a63e0;
+    --berry: #e5607f;
+    --pine: #2fa57a;
+
+    /* default accent (modals, header); cards override these */
+    --accent: var(--glacier);
+    --accent-2: #6fa8ff;
+    --accent-soft: #e8f0ff;
+
+    --shadow: 0 18px 50px -18px rgba(40, 70, 130, 0.25);
+    --shadow-sm: 0 6px 18px -8px rgba(40, 70, 130, 0.25);
+
+    --radius: 26px;
+    --small-radius: 14px;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: "DM Sans", sans-serif;
+    color: var(--text);
+    background: var(--frost);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+
+/* ---------------------------------------------------------
+   BACKGROUND: icy sky, aurora glow, slow snowfall
+   --------------------------------------------------------- */
+
+.page-background {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+
+    background:
+        radial-gradient(ellipse 70% 45% at 15% 0%, rgba(31, 181, 176, 0.28), transparent 70%),
+        radial-gradient(ellipse 60% 45% at 85% 5%, rgba(122, 99, 224, 0.26), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(229, 96, 127, 0.14), transparent 70%),
+        linear-gradient(180deg, #e6f1fc 0%, #f1f4fc 55%, #f7f1fa 100%);
+}
+
+
+.page-background::before,
+.page-background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+
+.page-background::before {
+    background-image:
+        radial-gradient(circle, #fff 0 1.6px, rgba(150, 185, 235, 0.35) 2.2px, transparent 3.4px),
+        radial-gradient(circle, #fff 0 1.2px, rgba(150, 185, 235, 0.3) 1.8px, transparent 3px);
+
+    background-size: 260px 260px, 180px 180px;
+    background-position: 0 0, 90px 40px;
+
+    opacity: 0.85;
+
+    animation: snowfall 38s linear infinite;
+}
+
+
+.page-background::after {
+    background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.9) 0 2.4px, rgba(150, 185, 235, 0.25) 3px, transparent 4.5px);
+
+    background-size: 420px 420px;
+    background-position: 130px 60px;
+
+    opacity: 0.7;
+
+    animation: snowfall-slow 70s linear infinite;
+}
+
+
+@keyframes snowfall {
+    to { background-position: 0 520px, 90px 400px; }
+}
+
+
+@keyframes snowfall-slow {
+    to { background-position: 130px 480px; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .page-background::before,
+    .page-background::after {
+        animation: none;
+    }
+
+    * {
+        transition: none !important;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   APP
+   --------------------------------------------------------- */
+
+.app-shell {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 30px 0 70px;
+}
+
+
+/* ---------------------------------------------------------
+   HEADER
+   --------------------------------------------------------- */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 40px;
+}
+
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.brand-icon {
+    width: 46px;
+    height: 46px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 15px;
+
+    color: white;
+    font-size: 22px;
+
+    background: linear-gradient(145deg, var(--glacier), var(--aurora));
+
+    box-shadow: 0 10px 22px -8px rgba(31, 140, 200, 0.55);
+}
+
+
+.brand h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    letter-spacing: -0.4px;
+    line-height: 1.1;
+}
+
+
+.brand p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.live-clock {
+    text-align: right;
+}
+
+
+.live-clock span {
+    display: block;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+.live-clock small {
+    display: block;
+
+    color: var(--muted);
+    font-size: 11px;
+
+    margin-top: 2px;
+}
+
+
+/* round / icon buttons */
+
+.icon-button,
+.date-nav-button,
+.close-button,
+.calendar-nav {
+    border: 0;
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--glass-strong);
+    color: var(--ink);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.icon-button {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 14px;
+
+    font-size: 18px;
+}
+
+
+.icon-button:hover,
+.date-nav-button:hover,
+.calendar-nav:hover {
+    transform: translateY(-2px);
+
+    color: var(--glacier);
+    box-shadow: 0 12px 24px -10px rgba(40, 70, 130, 0.4);
+}
+
+
+/* ---------------------------------------------------------
+   DATE
+   --------------------------------------------------------- */
+
+.date-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    margin-bottom: 40px;
+}
+
+
+.date-nav-button {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+
+.selected-date {
+    min-width: 280px;
+    text-align: center;
+}
+
+
+.date-label {
+    color: var(--aurora);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+}
+
+
+.selected-date h2 {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+
+    font-size: 34px;
+    letter-spacing: -0.8px;
+    line-height: 1.15;
+
+    margin: 4px 0 8px;
+
+    background: linear-gradient(100deg, var(--ink) 20%, var(--glacier) 60%, var(--dusk) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+
+.arc-day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+.arc-day span:first-child {
+    color: white;
+    font-weight: 700;
+
+    padding: 3px 10px;
+    border-radius: 999px;
+
+    background: linear-gradient(135deg, var(--aurora), var(--glacier));
+}
+
+
+.separator {
+    opacity: 0.4;
+}
+
+
+/* ---------------------------------------------------------
+   GRID + CARDS
+   --------------------------------------------------------- */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 22px;
+}
+
+
+.card {
+    position: relative;
+
+    background: var(--glass);
+
+    border: 1px solid rgba(255, 255, 255, 0.85);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    padding: 26px;
+
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+}
+
+
+/* each card gets its own aurora colour */
+
+.sleep-card {
+    --accent: var(--dusk);
+    --accent-2: #a28bf5;
+    --accent-soft: #eee9ff;
+
+    background: linear-gradient(150deg, rgba(238, 233, 255, 0.85), rgba(255, 255, 255, 0.72) 60%);
+}
+
+.progress-card {
+    --accent: var(--aurora);
+    --accent-2: #4fd6c8;
+    --accent-soft: #dff6f4;
+
+    background: linear-gradient(150deg, rgba(220, 247, 244, 0.85), rgba(255, 255, 255, 0.72) 60%);
+}
+
+.daily-plan-card {
+    --accent: var(--glacier);
+    --accent-2: #6fa8ff;
+    --accent-soft: #e5eeff;
+
+    background: linear-gradient(150deg, rgba(226, 237, 255, 0.85), rgba(255, 255, 255, 0.72) 60%);
+}
+
+.note-card {
+    --accent: var(--berry);
+    --accent-2: #ff8fa6;
+    --accent-soft: #ffe8ee;
+
+    background: linear-gradient(150deg, rgba(255, 232, 238, 0.8), rgba(255, 255, 255, 0.72) 60%);
+}
+
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 24px;
+}
+
+
+.eyebrow {
+    display: block;
+
+    color: var(--accent);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.6px;
+
+    margin-bottom: 5px;
+}
+
+
+.card h3 {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+
+    font-size: 21px;
+    letter-spacing: -0.3px;
+}
+
+
+.card-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background: var(--accent-soft);
+
+    font-size: 18px;
+}
+
+
+.sleep-icon {
+    background: var(--accent-soft);
+}
+
+
+/* ---------------------------------------------------------
+   FORM CONTROLS
+   --------------------------------------------------------- */
+
+input,
+select,
+textarea {
+    font-family: inherit;
+
+    border: 1px solid var(--border);
+
+    outline: none;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    color: var(--ink);
+
+    transition:
+        border 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent);
+
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
+
+    background: white;
+}
+
+
+input::placeholder,
+textarea::placeholder {
+    color: #9aa8bc;
+}
+
+
+.time-input-group {
+    flex: 1;
+}
+
+
+.time-input-group label {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+    font-weight: 600;
+
+    margin-bottom: 7px;
+}
+
+
+input[type="time"] {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* ---------------------------------------------------------
+   SLEEP
+   --------------------------------------------------------- */
+
+.sleep-inputs {
+    display: flex;
+    align-items: end;
+    gap: 12px;
+
+    margin-bottom: 22px;
+}
+
+
+.sleep-arrow {
+    color: var(--accent);
+    opacity: 0.6;
+
+    padding-bottom: 12px;
+}
+
+
+.sleep-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 20px;
+
+    border-radius: 18px;
+
+    background: linear-gradient(135deg, rgba(122, 99, 224, 0.12), rgba(74, 123, 240, 0.1));
+
+    border: 1px solid rgba(122, 99, 224, 0.14);
+
+    margin-bottom: 16px;
+}
+
+
+.result-label {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+
+    margin-bottom: 4px;
+}
+
+
+.sleep-result strong {
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+    letter-spacing: -0.5px;
+}
+
+
+.sleep-target {
+    text-align: right;
+}
+
+
+.sleep-target span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+.sleep-target strong {
+    font-family: "DM Sans", sans-serif;
+    font-size: 15px;
+    color: var(--accent);
+}
+
+
+/* ---------------------------------------------------------
+   BUTTONS
+   --------------------------------------------------------- */
+
+button {
+    font-family: inherit;
+}
+
+
+.primary-button,
+.secondary-button {
+    border: 0;
+
+    cursor: pointer;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.primary-button {
+    color: white;
+
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+    padding: 12px 18px;
+
+    box-shadow: 0 10px 22px -10px var(--accent);
+}
+
+
+.primary-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow: 0 14px 26px -10px var(--accent);
+}
+
+
+.primary-button:active {
+    transform: translateY(0);
+}
+
+
+.secondary-button {
+    color: var(--accent);
+
+    background: var(--accent-soft);
+
+    padding: 10px 15px;
+}
+
+
+.secondary-button:hover {
+    background: color-mix(in srgb, var(--accent) 16%, white);
+}
+
+
+.full-width {
+    width: 100%;
+}
+
+
+/* ---------------------------------------------------------
+   PROGRESS
+   --------------------------------------------------------- */
+
+.progress-percentage {
+    font-family: "Playfair Display", serif;
+
+    color: var(--accent);
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+.progress-ring-container {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 2px;
+}
+
+
+.progress-ring {
+    position: relative;
+
+    width: 160px;
+    height: 160px;
+}
+
+
+.progress-ring svg {
+    width: 100%;
+    height: 100%;
+
+    transform: rotate(-90deg);
+
+    overflow: visible;
+}
+
+
+.progress-ring circle {
+    fill: none;
+
+    stroke-width: 9;
+}
+
+
+.progress-track {
+    stroke: rgba(31, 181, 176, 0.14);
+}
+
+
+.progress-value {
+    stroke: var(--aurora);
+
+    stroke-linecap: round;
+
+    stroke-dasharray: 314;
+    stroke-dashoffset: 314;
+
+    filter: drop-shadow(0 4px 8px rgba(31, 181, 176, 0.45));
+
+    transition: stroke-dashoffset 0.6s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
+
+.progress-center {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.progress-center strong {
+    font-family: "Playfair Display", serif;
+    font-size: 34px;
+    line-height: 1;
+}
+
+
+.progress-center span {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 4px;
+}
+
+
+.progress-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    margin-top: 20px;
+
+    border-top: 1px solid var(--border);
+
+    padding-top: 18px;
+
+    text-align: center;
+}
+
+
+.progress-summary span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-bottom: 4px;
+}
+
+
+.progress-summary strong {
+    font-size: 18px;
+}
+
+
+/* ---------------------------------------------------------
+   DAILY PLAN
+   --------------------------------------------------------- */
+
+.daily-plan-card {
+    grid-column: 1 / -1;
+}
+
+
+.daily-plan-header {
+    align-items: center;
+}
+
+
+.timeline {
+    min-height: 180px;
+}
+
+
+.empty-state {
+    min-height: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    border: 1.5px dashed rgba(74, 123, 240, 0.28);
+
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.5);
+
+    padding: 32px;
+}
+
+
+.empty-icon {
+    width: 46px;
+    height: 46px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, var(--glacier), var(--aurora));
+
+    color: white;
+
+    font-size: 20px;
+
+    margin-bottom: 12px;
+
+    box-shadow: 0 10px 20px -8px rgba(40, 140, 220, 0.55);
+}
+
+
+.empty-state h4 {
+    font-family: "Playfair Display", serif;
+    font-size: 17px;
+
+    margin-bottom: 6px;
+}
+
+
+.empty-state p {
+    max-width: 360px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.65;
+
+    margin-bottom: 16px;
+}
+
+
+.activity-item {
+    display: grid;
+
+    grid-template-columns: 42px 1fr auto auto auto;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 13px 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    border-radius: 18px;
+
+    margin-bottom: 10px;
+
+    background: rgba(255, 255, 255, 0.78);
+
+    box-shadow: 0 4px 14px -8px rgba(40, 70, 130, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.activity-item:hover {
+    transform: translateY(-1px);
+
+    box-shadow: 0 12px 24px -12px rgba(40, 70, 130, 0.35);
+}
+
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background: linear-gradient(135deg, #e5eeff, #dff6f4);
+
+    font-size: 18px;
+}
+
+
+.activity-name {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.activity-category {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 2px;
+
+    text-transform: capitalize;
+}
+
+
+.activity-time {
+    color: var(--muted);
+
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+
+    white-space: nowrap;
+}
+
+
+.complete-button {
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    border: 1.5px solid rgba(74, 123, 240, 0.35);
+
+    background: white;
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.complete-button:hover {
+    border-color: var(--aurora);
+
+    box-shadow: 0 0 0 4px rgba(31, 181, 176, 0.14);
+}
+
+
+.delete-button {
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #9aa8bc;
+
+    font-size: 20px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+
+.delete-button:hover {
+    background: rgba(229, 96, 127, 0.14);
+
+    color: var(--berry);
+}
+
+
+.activity-item.completed {
+    opacity: 0.75;
+}
+
+
+.activity-item.completed .complete-button {
+    border-color: transparent;
+
+    background: linear-gradient(135deg, var(--aurora), var(--pine));
+}
+
+
+.activity-item.completed .activity-name {
+    text-decoration: line-through;
+    color: var(--muted);
+}
+
+
+/* ---------------------------------------------------------
+   NOTE
+   --------------------------------------------------------- */
+
+.note-card {
+    grid-column: 1 / -1;
+}
+
+
+.note-card textarea {
+    width: 100%;
+
+    min-height: 140px;
+
+    resize: vertical;
+
+    border-radius: 16px;
+
+    padding: 16px;
+
+    line-height: 1.65;
+
+    font-size: 13px;
+}
+
+
+.note-footer {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 12px;
+}
+
+
+.note-footer span {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* ---------------------------------------------------------
+   MODALS
+   --------------------------------------------------------- */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(20, 35, 59, 0.32);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+
+.modal-overlay.active {
+    display: flex;
+}
+
+
+.modal {
+    width: min(680px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: linear-gradient(160deg, #ffffff 0%, #f3f8ff 100%);
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    border-radius: 28px;
+
+    box-shadow: 0 40px 90px -30px rgba(20, 40, 90, 0.45);
+
+    padding: 26px;
+
+    animation: modalIn 0.22s ease;
+}
+
+
+@keyframes modalIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 22px;
+}
+
+
+.modal-header h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+}
+
+
+.modal .eyebrow {
+    color: var(--aurora);
+}
+
+
+.close-button {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+
+    box-shadow: none;
+
+    background: #eef3fa;
+
+    color: var(--muted);
+}
+
+
+.close-button:hover {
+    background: #e2eaf6;
+    color: var(--ink);
+}
+
+
+/* ---------------------------------------------------------
+   ACTIVITY LIBRARY
+   --------------------------------------------------------- */
+
+.activity-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+
+.activity-option {
+    border: 1px solid var(--border);
+
+    background: rgba(255, 255, 255, 0.8);
+
+    border-radius: 18px;
+
+    padding: 16px 8px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    color: var(--ink);
+
+    transition: all 0.2s ease;
+}
+
+
+.activity-option:hover {
+    border-color: rgba(31, 181, 176, 0.5);
+
+    background: linear-gradient(160deg, #e5f8f6, #e8f0ff);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 12px 22px -12px rgba(31, 140, 200, 0.45);
+}
+
+
+.activity-option-icon {
+    font-size: 24px;
+
+    margin-bottom: 8px;
+}
+
+
+.activity-option-name {
+    display: block;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.activity-option-category {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    margin-top: 3px;
+
+    text-transform: capitalize;
+}
+
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 26px 0 16px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+.divider::before,
+.divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+
+.custom-activity-form {
+    display: grid;
+
+    grid-template-columns: 1fr 130px 60px auto;
+
+    gap: 8px;
+}
+
+
+.custom-activity-form input,
+.custom-activity-form select {
+    padding: 11px 12px;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+}
+
+
+/* ---------------------------------------------------------
+   TIME MODAL
+   --------------------------------------------------------- */
+
+.small-modal {
+    width: min(440px, 100%);
+}
+
+
+.selected-activity-preview {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 14px;
+
+    background: linear-gradient(135deg, #e5eeff, #dff6f4);
+
+    border-radius: 18px;
+
+    margin-bottom: 18px;
+}
+
+
+.selected-activity-preview > span {
+    width: 44px;
+    height: 44px;
+
+    display: grid;
+    place-items: center;
+
+    background: white;
+
+    border-radius: 14px;
+
+    font-size: 21px;
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+.selected-activity-preview strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+
+.selected-activity-preview small {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 2px;
+
+    text-transform: capitalize;
+}
+
+
+.time-form {
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.time-form .time-input-group {
+    flex: 1;
+}
+
+
+/* ---------------------------------------------------------
+   CALENDAR PAGE
+   --------------------------------------------------------- */
+
+.calendar-page {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+
+    display: none;
+    overflow-y: auto;
+
+    background:
+        radial-gradient(ellipse 70% 40% at 15% 0%, rgba(31, 181, 176, 0.28), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 85% 5%, rgba(122, 99, 224, 0.26), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(229, 96, 127, 0.14), transparent 70%),
+        linear-gradient(180deg, #e6f1fc 0%, #f1f4fc 55%, #f7f1fa 100%);
+}
+
+
+.calendar-page.active {
+    display: block;
+
+    animation: pageIn 0.25s ease;
+}
+
+
+@keyframes pageIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+.calendar-page-inner {
+    width: min(1100px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 30px 0 60px;
+}
+
+
+.calendar-page-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    margin-bottom: 26px;
+}
+
+
+.calendar-back {
+    justify-self: start;
+
+    border: 0;
+    cursor: pointer;
+
+    padding: 11px 16px;
+
+    border-radius: 13px;
+
+    background: var(--glass-strong);
+    color: var(--ink);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    box-shadow: var(--shadow-sm);
+
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+
+.calendar-back:hover {
+    transform: translateY(-2px);
+    color: var(--glacier);
+}
+
+
+.calendar-page-title {
+    text-align: center;
+}
+
+
+.calendar-page-title .eyebrow {
+    color: var(--aurora);
+}
+
+
+.calendar-page-title h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 32px;
+    letter-spacing: -0.6px;
+}
+
+
+.calendar-today {
+    justify-self: end;
+}
+
+
+.calendar-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    padding: 16px 20px;
+
+    margin-bottom: 18px;
+
+    border-radius: 22px;
+
+    background: var(--glass);
+
+    border: 1px solid rgba(255, 255, 255, 0.85);
+
+    box-shadow: var(--shadow);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+.calendar-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.calendar-controls strong {
+    min-width: 180px;
+
+    text-align: center;
+
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    letter-spacing: -0.4px;
+}
+
+
+.calendar-nav {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    box-shadow: none;
+
+    background: #eef3fa;
+}
+
+
+.calendar-jump {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.calendar-jump select,
+.calendar-jump input {
+    padding: 10px 12px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+.calendar-weekdays,
+.calendar-days {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 8px;
+}
+
+
+.calendar-weekdays {
+    margin-bottom: 8px;
+}
+
+
+.calendar-weekdays span {
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+
+    padding: 6px;
+}
+
+
+.calendar-day {
+    position: relative;
+
+    min-height: 104px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 6px;
+
+    padding: 10px 12px;
+
+    text-align: left;
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.66);
+
+    box-shadow: 0 4px 14px -10px rgba(40, 70, 130, 0.35);
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    color: var(--ink);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.calendar-day.in-arc {
+    background: rgba(228, 240, 255, 0.85);
+}
+
+
+.calendar-day:hover {
+    transform: translateY(-2px);
+
+    background: white;
+
+    box-shadow: 0 14px 24px -14px rgba(40, 70, 130, 0.45);
+}
+
+
+.day-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.day-num {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+.day-arc {
+    font-size: 10px;
+    font-weight: 700;
+
+    color: var(--aurora);
+
+    padding: 2px 7px;
+
+    border-radius: 999px;
+
+    background: rgba(31, 181, 176, 0.13);
+}
+
+
+.day-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: var(--muted);
+
+    font-size: 10.5px;
+}
+
+
+.day-flags {
+    font-size: 11px;
+}
+
+
+.day-bar {
+    display: block;
+
+    height: 4px;
+
+    border-radius: 999px;
+
+    background: rgba(74, 123, 240, 0.15);
+
+    overflow: hidden;
+}
+
+
+.day-bar i {
+    display: block;
+
+    height: 100%;
+
+    border-radius: 999px;
+
+    background: linear-gradient(90deg, var(--aurora), var(--pine));
+}
+
+
+.calendar-day.today {
+    box-shadow: inset 0 0 0 2px rgba(31, 181, 176, 0.6);
+}
+
+
+.calendar-day.today .day-num {
+    color: var(--aurora);
+}
+
+
+.calendar-day.selected {
+    color: white;
+
+    background: linear-gradient(135deg, var(--glacier), var(--dusk));
+
+    box-shadow: 0 16px 26px -12px rgba(74, 99, 240, 0.65);
+}
+
+
+.calendar-day.selected .day-num {
+    color: white;
+}
+
+
+.calendar-day.selected .day-meta {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+
+.calendar-day.selected .day-arc {
+    color: white;
+
+    background: rgba(255, 255, 255, 0.22);
+}
+
+
+.calendar-day.selected .day-bar {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+.calendar-day.selected .day-bar i {
+    background: white;
+}
+
+
+.calendar-day.other-month {
+    opacity: 0.45;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 800px) {
+
+    .app-shell {
+        width: min(100% - 24px, 600px);
+
+        padding-top: 18px;
+    }
+
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .daily-plan-card,
+    .note-card {
+        grid-column: auto;
+    }
+
+
+    .activity-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+
+    .custom-activity-form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .custom-activity-form button {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .topbar {
+        align-items: flex-start;
+
+        margin-bottom: 28px;
+    }
+
+
+    .live-clock {
+        display: none;
+    }
+
+
+    .selected-date h2 {
+        font-size: 26px;
+    }
+
+
+    .date-section {
+        gap: 12px;
+
+        margin-bottom: 28px;
+    }
+
+
+    .selected-date {
+        min-width: 200px;
+    }
+
+
+    .card {
+        padding: 20px;
+
+        border-radius: 22px;
+    }
+
+
+    .activity-item {
+        grid-template-columns: 40px 1fr auto auto;
+
+        gap: 8px;
+    }
+
+
+    .activity-time {
+        grid-column: 2;
+    }
+
+
+    .complete-button {
+        grid-column: 3;
+        grid-row: 1 / 3;
+    }
+
+
+    .delete-button {
+        grid-column: 4;
+        grid-row: 1 / 3;
+    }
+
+
+    .activity-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .custom-activity-form {
+        grid-template-columns: 1fr;
+    }
+
+
+    .custom-activity-form button {
+        grid-column: auto;
+    }
+
+}
+
+
+/* calendar page responsive */
+
+@media (max-width: 800px) {
+
+    .calendar-page-inner {
+        width: min(100% - 24px, 640px);
+
+        padding-top: 18px;
+    }
+
+
+    .calendar-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .calendar-controls {
+        justify-content: space-between;
+    }
+
+
+    .calendar-jump {
+        justify-content: stretch;
+    }
+
+
+    .calendar-jump select,
+    .calendar-jump input {
+        flex: 1;
+    }
+
+
+    .calendar-day {
+        min-height: 80px;
+
+        padding: 8px;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .calendar-page-title h2 {
+        font-size: 24px;
+    }
+
+
+    .calendar-back {
+        padding: 9px 12px;
+
+        font-size: 12px;
+    }
+
+
+    .calendar-weekdays,
+    .calendar-days {
+        gap: 4px;
+    }
+
+
+    .calendar-day {
+        min-height: 54px;
+
+        padding: 7px;
+
+        border-radius: 13px;
+    }
+
+
+    .day-num {
+        font-size: 14px;
+    }
+
+
+    .day-arc,
+    .day-flags,
+    .day-meta span:first-child {
+        display: none;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   API STATES: loading, toasts, empty library
+   --------------------------------------------------------- */
+
+.dashboard-grid {
+    transition: opacity 0.2s ease;
+}
+
+
+.dashboard-grid.is-loading {
+    opacity: 0.5;
+
+    pointer-events: none;
+}
+
+
+.calendar-days {
+    transition: opacity 0.2s ease;
+}
+
+
+.calendar-days.is-loading {
+    opacity: 0.7;
+}
+
+
+button:disabled {
+    opacity: 0.6;
+
+    cursor: progress;
+}
+
+
+.library-empty {
+    grid-column: 1 / -1;
+
+    padding: 28px 16px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    border: 1.5px dashed rgba(74, 123, 240, 0.28);
+
+    border-radius: 16px;
+}
+
+
+.toast-container {
+    position: fixed;
+
+    left: 50%;
+    bottom: 22px;
+
+    transform: translateX(-50%);
+
+    z-index: 300;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    width: min(460px, calc(100% - 32px));
+
+    pointer-events: none;
+}
+
+
+.toast {
+    pointer-events: auto;
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    padding: 12px 16px;
+
+    border-radius: 16px;
+
+    background: var(--ink);
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    box-shadow: 0 18px 40px -16px rgba(20, 35, 59, 0.55);
+
+    animation: modalIn 0.2s ease;
+}
+
+
+.toast-error {
+    background: linear-gradient(135deg, #e5607f, #c94868);
+}
+
+
+.toast-action {
+    flex-shrink: 0;
+
+    border: 0;
+    cursor: pointer;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.22);
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition: background 0.2s ease;
+}
+
+
+.toast-action:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
